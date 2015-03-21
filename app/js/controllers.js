@@ -12,10 +12,10 @@ angular.module('myApp.controllers', [])
     var partiesRef = new Firebase('https://waitandeat-angular.firebaseio.com/');
     // new object that represents data
     $scope.parties = $firebase(partiesRef);
-    $scope.party = {name: '', phone: '', size: ''};
+    $scope.newParty = {name: '', phone: '', size: ''};
     $scope.saveParty = function() {
       // adding data to firebase
-      $scope.parties.$add($scope.party);
-      $scope.party = {name: '', phone: '', size: ''};
+      $scope.parties.$add($scope.newParty);
+      $scope.newParty = {name: '', phone: '', size: ''};
     };
   }]);
