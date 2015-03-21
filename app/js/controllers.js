@@ -7,11 +7,15 @@ angular.module('myApp.controllers', [])
   .controller('LandingPageController', [function() {
 
   }])
-  .controller('WaitlistController', ['$scope', function($scope) {
-    $scope.parties = [];
+  .controller('WaitlistController', ['$scope', '$firebase', function($scope, $firebase) {
+    // create firebase data
+    var partiesRef = new Firebase('https://waitandeat-angular.firebaseio.com/');
+    // new object that represents data
+    $scope.parties = $firbase(partiesRef);
     $scope.party = {name: '', phone: '', size: ''};
     $scope.saveParty = function() {
-      $scope.parties.push($scope.party);
+      // adding data to firebase
+      $scope.parties.$add($scope.party);
       $scope.party = {name: '', phone: '', size: ''};
     };
   }]);
