@@ -11,7 +11,7 @@ angular.module('myApp.controllers', [])
     // create firebase data
     var partiesRef = new Firebase('https://waitandeat-angular.firebaseio.com/');
     // new object that represents data
-    $scope.parties = $firbase(partiesRef);
+    $scope.parties = $firebase(partiesRef);
     $scope.party = {name: '', phone: '', size: ''};
     $scope.saveParty = function() {
       // adding data to firebase
