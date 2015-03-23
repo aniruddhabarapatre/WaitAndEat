@@ -12,11 +12,11 @@ angular.module('myApp.controllers', [])
     var partiesRef = new Firebase('https://waitandeat-angular.firebaseio.com/parties');
     // new object that represents data
     $scope.parties = $firebase(partiesRef);
-    $scope.newParty = {name: '', phone: '', size: '', done: false};
+    $scope.newParty = {name: '', phone: '', size: '', done: false, notified: 'No'};
     $scope.saveParty = function() {
       // adding data to firebase
       $scope.parties.$add($scope.newParty);
-      $scope.newParty = {name: '', phone: '', size: '', done: false};
+      $scope.newParty = {name: '', phone: '', size: '', done: false, notified: 'No'};
     };
 
     // Send text message to party
@@ -29,5 +29,7 @@ angular.module('myApp.controllers', [])
         name: party.name
       };
       textMessages.$add(newTextMessage);
+      party.notified = 'Yes';
+      scope.parties.$save(party.$id);
     };
   }]);
