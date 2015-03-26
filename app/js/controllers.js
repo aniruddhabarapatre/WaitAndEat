@@ -49,4 +49,8 @@ angular.module('myApp.controllers', [])
         console.log(data);
       });
     };
+
+    $scope.logout = function() {
+      auth.$logout();
+    };
   }]);
