@@ -33,15 +33,13 @@ angular.module('myApp.controllers', [])
       scope.parties.$save(party.$id);
     };
   }])
-  .controller('AuthController', ['$scope', '$firebaseSimpleLogin', '$location', 'FIREBASE_URL', 'authService', function($scope, $firebaseSimpleLogin, $location, FIREBASE_URL, authService) {
-    var authRef = new Firebase(FIREBASE_URL);
-    var auth = $firebaseSimpleLogin(authRef);
+  .controller('AuthController', ['$scope', 'authService', function($scope, authService) {
+    // Object bound to inputs on register and login pages
     $scope.user = {email: '', password: ''};
+
+    // register a new user
     $scope.register = function() {
-      auth.$createUser($scope.user.email, $scope.user.password).then(function(data) {
-        console.log(data);
-        $scope.login();
-      });
+      authService.register($scope.user);
     };
 
     $scope.login = function() {
@@ -49,7 +47,6 @@ angular.module('myApp.controllers', [])
     };
 
     $scope.logout = function() {
-      auth.$logout();
-      $location.path('/');
+      authService.logout();
     };
   }]);
