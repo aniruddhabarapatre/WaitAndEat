@@ -14,12 +14,30 @@ angular.module('myApp.services', [])
     var parties = $firebase(partiesRef);
     var partyServiceObject = {
       parties: parties,
-      saveParty: function() {
+      saveParty: function(party) {
         parties.$add(party);
       }
     };
 
     return partyServiceObject;
+  })
+  .factory('textMessageService', function($firebase, FIREBASE_URL, partyService) {
+    var textMessageRef = new Firebase(FIREBASE_URL + 'textMessages');
+    var textMessages = $firebase(textMessageRef);
+    var textMessageServiceObject = {
+      sendTextMessage: function(party) {
+        var newTextMessage = {
+          phoneNumber: party.phone,
+          size: party.size,
+          name: party.name
+        };
+        textMessages.$add(newTextMessage);
+        party.notified = 'Yes';
+        partyService.parties.$save(party.$id);
+      }
+    };
+
+    return textMessageServiceObject;
   })
   .factory('authService', function($firebaseSimpleLogin, $location, $rootScope, FIREBASE_URL) {
     var authRef = new Firebase(FIREBASE_URL);
