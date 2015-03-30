@@ -15,10 +15,13 @@ angular.module('myApp.services', [])
   .factory('partyService', function(dataService) {
     // using child to get parties in firebase
     var parties = dataService.$child('parties');
+    var users = dataService.$child('users');
+
     var partyServiceObject = {
       parties: parties,
-      saveParty: function(party) {
-        parties.$add(party);
+      saveParty: function(party, userId) {
+        // parties.$add(party);
+        users.$child(userId).$child('parties').$add(party);
       }
     };
 

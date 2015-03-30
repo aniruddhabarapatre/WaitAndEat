@@ -10,8 +10,9 @@ angular.module('myApp.controllers', [])
   .controller('WaitlistController', ['$scope', 'partyService', 'textMessageService', function($scope, partyService, textMessageService) {
     $scope.parties = partyService.parties;
     $scope.newParty = {name: '', phone: '', size: '', done: false, notified: 'No'};
+    
     $scope.saveParty = function() {
-      partyService.saveParty($scope.newParty);
+      partyService.saveParty($scope.newParty, $scope.currentUser.id);
       $scope.newParty = {name: '', phone: '', size: '', done: false, notified: 'No'};
     };
 
