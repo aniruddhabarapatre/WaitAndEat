@@ -7,8 +7,13 @@ angular.module('myApp.controllers', [])
   .controller('LandingPageController', [function() {
 
   }])
-  .controller('WaitlistController', ['$scope', 'partyService', 'textMessageService', function($scope, partyService, textMessageService) {
-    $scope.parties = partyService.parties;
+  .controller('WaitlistController', ['$scope', 'partyService', 'textMessageService', 'authService', function($scope, partyService, textMessageService, authService) {
+    // Bind users parties to $scope.parties
+    authService.getCurrentUser().then(function(user) {
+      if (user) {
+        $scope.parties = partyService.getPartiesByUserId(user.id);
+      }
+    })
     $scope.newParty = {name: '', phone: '', size: '', done: false, notified: 'No'};
     
     $scope.saveParty = function() {

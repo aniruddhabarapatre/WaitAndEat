@@ -13,15 +13,14 @@ angular.module('myApp.services', [])
     return fireData;
   })
   .factory('partyService', function(dataService) {
-    // using child to get parties in firebase
-    var parties = dataService.$child('parties');
     var users = dataService.$child('users');
 
     var partyServiceObject = {
-      parties: parties,
       saveParty: function(party, userId) {
-        // parties.$add(party);
         users.$child(userId).$child('parties').$add(party);
+      },
+      getPartiesByUserId: function(userId) {
+        return users.$child(userId).$child('parties');
       }
     };
 
@@ -65,6 +64,9 @@ angular.module('myApp.services', [])
       logout: function() {
         auth.$logout();
         $location.path('/');
+      },
+      getCurrentUser: function() {
+        return auth.$getCurrentUser();
       }
     };
 
