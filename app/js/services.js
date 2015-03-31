@@ -53,13 +53,15 @@ angular.module('myApp.services', [])
     var authServiceObject = {
       register: function(user) {
         auth.$createUser(user.email, user.password).then(function(data) {
-          emails.$add({emai: user.email});
-          authServiceObject.login(user);
+          authServiceObject.login(user, function() {
+            emails.$add({emai: user.email});
+          });
         });
       },
-      login: function(user) {
+      login: function(user, optionalCallback) {
         auth.$login('password', user).then(function(data) {
           console.log(data);
+          optionalCallback();
           $location.path('/waitlist');
         });
       },
